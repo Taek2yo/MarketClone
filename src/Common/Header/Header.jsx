@@ -69,7 +69,7 @@ const Header = () => {
         <UserHead>
           {!userData.nickName ? (
             <>
-              <HeadUserLink to="/join">회원가입</HeadUserLink>
+              <HeadUserLink to="/signup">회원가입</HeadUserLink>
               <HeadeVertical />
               <HeadUserLink to="/login" style={{ color: "inherit" }}>
                 로그인
