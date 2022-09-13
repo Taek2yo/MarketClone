@@ -17,10 +17,6 @@
 
 - <strong>Deploy</strong>
 
-<p>
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=Vercel&logoColor=white">
-</p>
-
 
 
 </br>
