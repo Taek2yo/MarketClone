@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import detailSlice from "../modules/detailSlice";
 import { productSlice } from "../modules/productSlice";
-import joinSlice from "../modules/joinSlice";
+import signupSlice from "../modules/signupSlice";
 import categorySlice from "../modules/categorySlice";
 import { cartSlice } from "../modules/cartSlice";
 import loginSlice from "../modules/loginSlice";
@@ -10,7 +10,7 @@ const store = configureStore({
   reducer: {
     login: loginSlice.reducer,
     category: categorySlice.reducer,
-    join: joinSlice.reducer,
+    signup: signupSlice.reducer,
     product: productSlice.reducer,
     detail: detailSlice.reducer,
     cart: cartSlice.reducer,

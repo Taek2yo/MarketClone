@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../Common/Header/Header";
 import Layouts from "../Common/Layout";
-import JoinForm from "../components/Join/JoinForm";
+import SignupForm from "../components/Join/SignupForm";
 
-function Join() {
+function Signup() {
   return (
     <>
       <Header />
@@ -14,14 +14,14 @@ function Join() {
           <RequirementInfo>
             <span>*</span> 필수입력사항
           </RequirementInfo>
-          <JoinForm></JoinForm>
+          <SignupForm></SignupForm>
         </JoinBody>
       </Layouts>
     </>
   );
 }
 
-export default Join;
+export default Signup;
 
 const JoinTitle = styled.div`
   margin: 50px 0;

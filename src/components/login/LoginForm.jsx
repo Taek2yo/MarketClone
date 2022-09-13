@@ -92,7 +92,7 @@ function LoginForm() {
               width="100%"
               height="54px"
               fontSize="16px"
-              onClick={() => nav("/join")}
+              onClick={() => nav("/signup")}
             >
               회원가입
             </Btn>

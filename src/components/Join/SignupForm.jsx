@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  joinThunk,
+  signupThunk,
   idCheckThunk,
-  emailCheckThunk,
-  emailAuthThunk,
-  resetJoinState,
-} from "../../redux/modules/joinSlice";
+  resetSignupState,
+} from "../../redux/modules/signupSlice";
 import { useNavigate } from "react-router-dom";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { Btn } from "../../elements/Btn";
@@ -22,19 +20,17 @@ import {
 } from "./Style";
 import Agreement from "./Agreement";
 
-function JoinForm() {
+function SignupForm() {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    userId: "",
+    username: "",
     password: "",
     confirmPw: "",
     nickName: "",
-    email: "",
-    address: "",
   });
 
-  const { userId, password, confirmPw, nickName, email, address } = userInfo;
+  const { username, password, confirmPw, nickName } = userInfo;
   const handleInput = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
@@ -42,28 +38,26 @@ function JoinForm() {
 
   // ! ------------ 여기부터 유효성 검사 로직 -----------------
   // 유효성 검사 룰
-  const userIdRegEx = /^[a-zA-Z0-9]{4,8}$/; // ID >> 숫자 및 알파벳만 가능(4~8글자)
+  const usernameRegEx = /^[a-zA-Z0-9]{4,8}$/; // ID >> 숫자 및 알파벳만 가능(4~8글자)
   const passwordRegEx = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/; // Password >> 6~20글자 , 최소 1개 이상의 숫자 또는 특수문자 포함
   const nickNameRegEx = /^[가-힣a-zA-Z]{4,8}$/; // 닉네임 >> 한글 및 영문만 가능(4~8글자)
-  const emailRegEx = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/; // 이메일 >>
-
+  
   // 인풋에 들어온 내용이 valid한가?(참/거짓)
   const [isIdValid, setIsIdValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
   const [isConfirmPwValid, setIsConfirmPwValid] = useState(false);
   const [isNickNameValid, setIsNickNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
+ 
 
   // 유효성 검증 문구를 보여주는 useState모음
   const [idRuleDesc, setIdRuleDesc] = useState("");
   const [pwRuleDesc, setPwRuleDesc] = useState("");
   const [ConfirmPwRuleDesc, setConfirmPwRuleDesc] = useState("");
   const [nickNameRuleDesc, setNickNameRuleDesc] = useState("");
-  const [emailRuleDesc, setEmailRuleDesc] = useState("");
-
+ 
   // ID 유효성 검증 이벤트함수
-  const userIdValidation = () => {
-    if (userIdRegEx.test(userId)) {
+  const usernameValidation = () => {
+    if (usernameRegEx.test(username)) {
       setIsIdValid(true);
       setIdRuleDesc("");
     } else {
@@ -107,56 +101,23 @@ function JoinForm() {
     }
   };
 
-  // 이메일 유효성 검증 이벤트함수
-  const emailValidation = () => {
-    if (emailRegEx.test(email)) {
-      setIsEmailValid(true);
-      setEmailRuleDesc("");
-    } else {
-      setIsEmailValid(false);
-      setEmailRuleDesc("이메일 형식으로 입력해 주세요.");
-    }
-  };
   // ! ------------ 여기부터 중복 확인 로직 -----------------
-  const isIdUsable = useSelector((state) => state.join.isIdUsable);
-  const isEmailUsable = useSelector((state) => state.join.isEmailUsable);
+  const isIdUsable = useSelector((state) => state.signup.isIdUsable);
+  
 
   // 아이디 중복 확인 함수
-  const userIdCheck = () => {
-    if (userId === "") {
+  const usernameCheck = () => {
+    if (username === "") {
       alert("4자 이상 8자 이하의 영문 및 숫자를 조합");
     } else {
       if (isIdValid) {
-        dispatch(idCheckThunk(userId));
+        dispatch(idCheckThunk(username));
       } else {
         alert(idRuleDesc);
       }
     }
   };
 
-  // 이메일 중복 확인 함수
-  const emailCheck = () => {
-    if (email === "") {
-      alert("이메일 형식으로 입력해 주세요.");
-    } else {
-      if (isEmailValid) {
-        dispatch(emailCheckThunk(email));
-      } else {
-        alert(emailRuleDesc);
-      }
-    }
-  };
-  // const SendEamilAuth = () => {
-  //   if (email === "") {
-  //     alert("이메일 형식으로 입력해 주세요.");
-  //   } else {
-  //     if (isEmailValid) {
-  //       dispatch(emailAuthThunk(email));
-  //     } else {
-  //       alert(emailRuleDesc);
-  //     }
-  //   }
-  // };
   // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
   const [modal, setModal] = useState(false);
 
@@ -200,11 +161,10 @@ function JoinForm() {
       isIdValid &&
       isPwValid &&
       isConfirmPwValid &&
-      isNickNameValid &&
-      isEmailValid === true
+      isNickNameValid === true
     ) {
-      if (isIdUsable && isEmailUsable) {
-        dispatch(joinThunk({ userId, nickName, password, email, address }));
+      if (isIdUsable) {
+        dispatch(signupThunk({ username, nickName, password}));
       } else {
         alert("중복검사를 실시해주세요.");
       }
@@ -213,13 +173,13 @@ function JoinForm() {
     }
   };
 
-  const isJoinSucceed = useSelector((state) => state.join.isJoinSucceed);
+  const isSignupSucceed = useSelector((state) => state.signup.isSignupSucceed);
   useEffect(() => {
-    if (isJoinSucceed) {
-      dispatch(resetJoinState());
+    if (isSignupSucceed) {
+      dispatch(resetSignupState());
       nav("/login");
     }
-  }, [isJoinSucceed]);
+  }, [isSignupSucceed]);
   // ! ------------ 여기부터 뷰 -----------------
   return (
     <div>
@@ -233,12 +193,12 @@ function JoinForm() {
         <InputWrapper>
           <Input
             type="text"
-            name="userId"
-            value={userId}
+            name="username"
+            value={username}
             onChange={handleInput}
             placeholder="아이디를 입력해주세요"
             autoComplete="off"
-            onKeyUp={userIdValidation}
+            onKeyUp={usernameValidation}
             maxLength="9"
           />
           <Validation>
@@ -249,7 +209,7 @@ function JoinForm() {
           <Btn
             type="button"
             onClick={() => {
-              userIdCheck();
+              usernameCheck();
             }}
             disabled={isIdUsable}
           >
@@ -332,47 +292,7 @@ function JoinForm() {
         </InputWrapper>
         <BtnWrapper />
       </StRow>
-      <StRow>
-        <LabelWrapper>
-          <label>
-            이메일
-            <span>*</span>
-          </label>
-        </LabelWrapper>
-
-        <InputWrapper>
-          <Input
-            type="text"
-            name="email"
-            value={email.value}
-            onChange={handleInput}
-            placeholder="이메일을 입력해주세요"
-            autoComplete="off"
-            onKeyUp={emailValidation}
-          />
-          <Validation>
-            <p>{emailRuleDesc}</p>
-          </Validation>
-        </InputWrapper>
-        <BtnWrapper visibility="visible">
-          <Btn
-            type="button"
-            onClick={() => {
-              emailCheck();
-              // SendEamilAuth();
-            }}
-            disabled={isEmailUsable}
-          >
-            중복확인
-          </Btn>
-        </BtnWrapper>
-        {/* --------- 모달창 ------------- */}
-        {/* {modal ? (
-          <Modal modal={modal} setModal={setModal}>
-            {emailRuleDesc}
-          </Modal>
-        ) : null} */}
-      </StRow>
+      
       <StRow>
         <LabelWrapper>
           <label>주소</label>
@@ -417,7 +337,7 @@ function JoinForm() {
     </div>
   );
 }
-export default JoinForm;
+export default SignupForm;
 const Line = styled.div`
   padding: 10px 0px;
   border-bottom: 1px solid rgb(51, 51, 51);
