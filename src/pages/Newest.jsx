@@ -1,4 +1,4 @@
-/* import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "../Common/Header/Header";
 import styled from "styled-components";
 import Layouts from "../Common/Layout";
@@ -89,4 +89,3 @@ export const NewestItemWrap = styled.div`
   justify-content: space-between;
   width: 1050px;
 `;
- */

@@ -24,7 +24,7 @@ export const __getProducts = createAsyncThunk(
   async (payload, thunkAPI) => {
       try {
           const data = await axios.get(`http://13.209.26.228:8080/api/products`);
-          /* console.log(data) */
+          console.log(data)
           return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
           return thunkAPI.rejectWithValue(error.code);
@@ -36,7 +36,7 @@ export const getPieceProductAsync = createAsyncThunk(
   "get/PeiceProduct",
   async () => {
     try {
-      const res = await instance.get("/product/");
+      const res = await axios.get(`http://13.209.26.228:8080/api/product`);
       return res.data;
     } catch (error) {
       console.error(error);

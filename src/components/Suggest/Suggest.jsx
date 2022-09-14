@@ -38,6 +38,7 @@ const settings = {
 };
 
 const Suggest = ({ children, list }) => {
+  console.log(list)
   return (
     <SuggestWraper>
       <SuggestBox>
@@ -47,7 +48,7 @@ const Suggest = ({ children, list }) => {
         <SuggestBody>
           <Slider {...settings}>
             {list?.map((item) => (
-              <SuggestList key={item.productId} item={item} />
+              <SuggestList key={item?.id} item={item} />
             ))}
           </Slider>
         </SuggestBody>
