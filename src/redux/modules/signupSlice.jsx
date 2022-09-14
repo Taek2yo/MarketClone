@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from "./instance";
+import axios from 'axios';
 
 // 초기값 선언
 const initialState = {
@@ -7,17 +8,17 @@ const initialState = {
   isIdUsable: false,
 };
 
-// thunk함수(회원가입) 선언
-export const signupThunk = createAsyncThunk(
-  "signupSlice/signupThunk",
+export const __SignUp = createAsyncThunk(
+  "api/member/signup",
   async (payload, thunkAPI) => {
-    try {
-      const response = await instance.post("/user/signup", payload);
-      console.log(response);
-      return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response); //통신 실패시 에러값 반환
-    }
+      try {
+          console.log(payload)
+          const data =  await axios.post("http://13.209.26.228:8080/api/user/signup", payload);
+          console.log(data.data)
+          return thunkAPI.fulfillWithValue(data.data);
+        } catch (error) {
+          return thunkAPI.rejectWithValue(error);
+        }
   }
 );
 
@@ -25,16 +26,6 @@ export const signupThunk = createAsyncThunk(
 export const idCheckThunk = createAsyncThunk(
   "signupSlice/idCheckThunk",
   async (payload, thunkAPI) => {
-    try {
-      const response = await instance.post("/user/idCheck", {
-        key: "username",
-        value: payload,
-      });
-      return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
-      //response.data확인
-    } catch (iderror) {
-      return thunkAPI.rejectWithValue(iderror.response.data); //통신 실패시 에러값 반환
-    }
   }
 );
 
@@ -50,25 +41,27 @@ const signupSlice = createSlice({
     },
   },
   extraReducers: {
-    [signupThunk.fulfilled]: (state, action) => {
+    [__SignUp.fulfilled]: (state, action) => {
       // action.payload = response.data
       alert("가입이 완료되었습니다.");
       state.isSignupSucceed = true;
     },
-    [signupThunk.rejected]: (state, action) => {
+    [__SignUp.rejected]: (state, action) => {
       alert("다시 시도해주세요.");
       state.isSignupSucceed = false;
     },
     [idCheckThunk.fulfilled]: (state, action) => {
       state.isIdUsable = true;
-      alert(action.payload.Message); // 사용 가능한 아이디 입니다.
+      alert(action.payload.Message);// 사용 가능한 아이디 입니다.
     },
     [idCheckThunk.rejected]: (state, action) => {
       state.isIdUsable = false;
-      alert(action.payload.errorMessage); // 중복된 아이디 입니다.
+      // alert(action.payload.errorMessage);
+      console.log(action.payload.errorMessage)  // 중복된 아이디 입니다.
     }
   },
 });
+
 //action 데이터로 받음 action 확인
 // reducer export
 export const { resetSignupState } = signupSlice.actions;

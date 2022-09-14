@@ -7,7 +7,7 @@ export const getCategoryAsync = createAsyncThunk(
   "get/categoryFilter",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.get(`/product/search/${data}`);
+      const res = await instance.get(`/products/search/${data}`);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -15,7 +15,7 @@ export const getCategoryAsync = createAsyncThunk(
   }
 );
 
-export const categorySlice = createSlice({
+ export const categorySlice = createSlice({
   name: "product",
   initialState,
   reducers: {},
