@@ -6,10 +6,10 @@ const SuggestList = ({ item }) => {
   // console.log("suggestList:", item);
   return (
     <>
-      <Wrapper to={`/detail/${item.productId}`}>
+      <Wrapper to={`/detail/${item.id}`}>
         <ListBox>
           <ListImageBox>
-            <img src={item?.productImage} alt="상품 이미지" />
+            <img src={item?.imageUrl} alt="상품 이미지" />
             <div>
               <CartButton>
                 <img
@@ -21,11 +21,11 @@ const SuggestList = ({ item }) => {
           </ListImageBox>
         </ListBox>
         <ListTitleBox>
-          <h3>{item?.productName}</h3>
+          <h3>{item?.title}</h3>
           <ListFooter>
             <PriceBox>
-              <PirceDC>5%</PirceDC>
-              <span>{(item?.price * 0.95).toLocaleString("ko-kr")} 원</span>
+              <PirceDC>10%</PirceDC>
+              <span>{(item?.price * 0.90).toLocaleString("ko-kr")} 원</span>
             </PriceBox>
           </ListFooter>
           <RealPrice>{item?.price.toLocaleString("ko-kr")}</RealPrice>

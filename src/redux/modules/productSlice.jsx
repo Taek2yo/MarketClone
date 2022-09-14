@@ -1,37 +1,42 @@
 import { instance } from "./instance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = [];
+const initialState = [
+  
+];
 
-export const postProductAsync = createAsyncThunk(
+/* export const postProductAsync = createAsyncThunk(
   "post/postProduct",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.post("/products", data);
+      const res = await instance.post("/product", data);
       return res.data;
     } catch (err) {
       console.error(err);
     }
   }
 );
+ */
 
-export const getProductAsync = createAsyncThunk(
-  "get/AllProduct",
-  async (thunkAPI) => {
-    try {
-      const res = await instance.get("/api/products");
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
+export const __getProducts = createAsyncThunk(
+  "getProducts",
+  async (payload, thunkAPI) => {
+      try {
+          const data = await axios.get(`http://13.209.26.228:8080/api/products`);
+          console.log(data)
+          return thunkAPI.fulfillWithValue(data.data);
+      } catch (error) {
+          return thunkAPI.rejectWithValue(error.code);
+      }
   }
 );
 
 export const getPieceProductAsync = createAsyncThunk(
-  "get/PeiceProdut",
+  "get/PeiceProduct",
   async () => {
     try {
-      const res = await instance.get("/products/");
+      const res = await axios.get(`http://13.209.26.228:8080/api/product`);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -45,11 +50,11 @@ export const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(postProductAsync.fulfilled, (state, action) => ({
+      /* .addCase(postProductAsync.fulfilled, (state, action) => ({
         ...state,
         data: action.payload,
-      }))
-      .addCase(getProductAsync.fulfilled, (state, action) => {
+      })) */
+      .addCase(__getProducts.fulfilled, (state, action) => {
         return (state = action.payload);
       })
       .addCase(getPieceProductAsync.fulfilled, (state, action) => ({

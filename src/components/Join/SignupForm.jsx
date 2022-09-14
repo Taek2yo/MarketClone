@@ -19,6 +19,7 @@ import {
   SubmitBtnWrapper,
 } from "./Style";
 import Agreement from "./Agreement";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 
 function SignupForm() {
   const dispatch = useDispatch();
@@ -125,7 +126,7 @@ function SignupForm() {
     setModal(!modal);
   };
 
-/*   // ! ----------- 카카오 우편번호 API ------------------------------
+  // ! ----------- 카카오 우편번호 API ------------------------------
   const scriptUrl =
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl);
@@ -152,7 +153,7 @@ function SignupForm() {
     open({ onComplete: handleComplete });
   };
   // console.log(userInfo);
-  // ! ------------------ 가입하기 버튼 -------------------------- */
+  // ! ------------------ 가입하기 버튼 --------------------------
   // 모든 항목을 만족했을 때만 submit!
   const SubmitData = (e) => {
     e.preventDefault();
@@ -293,7 +294,7 @@ function SignupForm() {
         <BtnWrapper />
       </StRow>
       
-      {/* <StRow>
+      <StRow>
         <LabelWrapper>
           <label>주소</label>
           <span>*</span>
@@ -318,7 +319,7 @@ function SignupForm() {
           </Validation>
         </InputWrapper>
         <BtnWrapper />
-      </StRow> */}
+      </StRow>
       <Line />
       <Agreement />
       <SubmitBtnWrapper>

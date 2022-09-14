@@ -4,15 +4,16 @@ import styled from "styled-components";
 import Header from "../Common/Header/Header";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loadProductThunk } from "../redux/modules/detailSlice";
+import { __getProducts } from "../redux/modules/productSlice";
 import { addCartAysnc } from "../redux/modules/cartSlice";
 import Modal from "react-modal";
 import jwtDecode from "jwt-decode";
 
 const Detail = () => {
   const dispatch = useDispatch();
-  const { productId } = useParams();
-  const detail = useSelector((state) => state.detail.detailProduct);
+  const { id } = useParams();
+  const detail = useSelector((state) => state.product?.data);
+  console.log(detail)
   const [modal, setModal] = useState(false);
 
   let userData = [];
@@ -21,13 +22,13 @@ const Detail = () => {
   }
 
   useLayoutEffect(() => {
-    dispatch(loadProductThunk(productId));
-  }, [dispatch, productId]);
+    dispatch(__getProducts(id));
+  }, [dispatch, id]);
 
   const onAddCart = (e) => {
     e.preventDefault();
     setModal(true);
-    dispatch(addCartAysnc({ productId, quantity: 1 }));
+    dispatch(addCartAysnc({ id, quantity: 1 }));
   };
 
   return (
@@ -35,28 +36,28 @@ const Detail = () => {
       <Header />
       <Layouts>
         <DetailWrap>
-          <DetailImg src={detail?.productImage} />
+          <DetailImg src={detail[id-1].imageUrl} />
           <DetailInfo>
             <ProductName>
-              <h2>{detail?.productName}</h2>
+              <h2>{detail[id-1].title}</h2>
               <button style={{ width: "40px", height: "40px" }}></button>
             </ProductName>
-            <ProductDesc>{detail?.desc}</ProductDesc>
+            <ProductDesc>{detail[id-1].desc}</ProductDesc>
             <ProductPriceWrap>
-              <span>{detail?.price.toLocaleString("ko-kr")}</span>
+              <span>{detail[id-1].price.toLocaleString("ko-kr")}</span>
               <span> 원</span>
             </ProductPriceWrap>
             <Discount>
-              <span>일반5% &nbsp;|</span>
+              <span>일반10% &nbsp;|</span>
               <span>
-                &nbsp; 1개당 {(detail?.price * 0.05).toLocaleString("ko-kr")} 원
+                &nbsp; 1개당 {(detail[id-1]?.price * 0.1).toLocaleString("ko-kr")} 원
                 할인
               </span>
             </Discount>
             <ProductDelivery>
               <span>배송</span>
               <DeliveryInfo>
-                <p>{detail?.delivery}</p>
+                <p>주소</p>
                 <br />
                 <p>
                   23시 전 주문시 내일 아침 7시 전 도착
@@ -65,10 +66,7 @@ const Detail = () => {
                 </p>
               </DeliveryInfo>
             </ProductDelivery>
-            <ProductCategoryWrap>
-              <span>구분</span>
-              <span>{detail?.category}</span>
-            </ProductCategoryWrap>
+            
             <ProductUnit>
               <span>판매단위</span>
               <span>1개</span>
@@ -80,13 +78,13 @@ const Detail = () => {
             <ProductUI>
               <ProductTotal>
                 <span>총 상품금액: </span>
-                <span>{(detail?.price * 0.95).toLocaleString("ko-kr")}</span>
+                <span>{(detail[id-1]?.price * 0.90).toLocaleString("ko-kr")}</span>
                 <span>원</span>
               </ProductTotal>
               <ButtonWrap>
                 <LikeButton>
                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBzdHJva2U9IiM1RjAwODAiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" />
-                  {/* <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBmaWxsPSIjRkY1QTVBIiBzdHJva2U9IiNGRjVBNUEiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"/> */}
+
                 </LikeButton>
                 <BellButton>
                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEyLjY2NiAyM2EzLjMzMyAzLjMzMyAwIDEgMCA2LjY2NiAwIi8+CiAgICAgICAgPHBhdGggZD0iTTI1Ljk5OCAyMi43MzhINmwuMDEzLS4wM2MuMDc2LS4xMzUuNDcxLS43MDQgMS4xODYtMS43MDlsLjc1LTEuMDV2LTYuNjM1YzAtNC40ODUgMy40MzgtOC4xNCA3Ljc0MS04LjMwOEwxNiA1YzQuNDQ2IDAgOC4wNSAzLjcyMiA4LjA1IDguMzE0djYuNjM0bDEuNzA3IDIuNDExYy4xNzMuMjUzLjI1NC4zOC4yNDIuMzh6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDwvZz4KPC9zdmc+Cg==" />
@@ -147,11 +145,11 @@ const Detail = () => {
                     >
                       <ModalText>장바구니에 상품을 담았습니다.</ModalText>
                       <ModalWrap>
-                        <Img src={detail?.productImage}></Img>
+                        <Img src={detail[id-1].productImage}></Img>
                         <ModalBox>
-                          <ModalTitle>{detail?.productName}</ModalTitle>
+                          <ModalTitle>{detail[id-1].productName}</ModalTitle>
                           <ModalPrice>
-                            {detail?.price}
+                            {detail[id-1].price}
                             <span>원</span>
                           </ModalPrice>
                         </ModalBox>

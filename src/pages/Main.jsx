@@ -8,7 +8,7 @@ import LineBanner from "../components/LineBanner/LineBanner";
 import SpeacilDeals from "../components/SpecialDeals/SpecialDeals";
 import Catergories from "../components/Categories/Categories";
 
-import { getProductAsync } from "../redux/modules/productSlice";
+import { __getProducts } from "../redux/modules/productSlice";
 import { getCategoryAsync } from "../redux/modules/categorySlice";
 
 const Main = () => {
@@ -22,16 +22,16 @@ const Main = () => {
     setCategory(e.target.value);
   }, []);
 
-  useEffect(() => {
+/*   useEffect(() => {
     dispatch(getCategoryAsync(category));
   }, [category]);
-
+ */
   useEffect(() => {
-    dispatch(getProductAsync());
-  }, []);
+    dispatch(__getProducts());
+  }, [dispatch]);
 
-  const list = useSelector((state) => state.product.data);
-
+  const list = useSelector((state) => state.product?.data);
+  console.log(list)
   return (
     <>
       <Header />
