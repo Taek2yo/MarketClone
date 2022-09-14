@@ -12,28 +12,28 @@ import {
 
 const slides = [
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/c22f86b2-3bb3-4974-ac4e-0668e69501c9.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/8e55ed8b-fb13-448d-9f45-991bf99f9582.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/44517000-959a-4702-be73-34e35c35f8a8.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/ed361f44-210a-4747-97b4-b61d2233b762.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/c69cdb49-84bb-43a7-91aa-9d703cba994b.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/d5dcd4e4-9a54-427e-9282-e16ae5fc911e.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/26f022f6-8675-4768-b645-8751c22fb166.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/60e2eaf4-6e56-45fb-ad3b-2f2a76f19dbc.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/e555d31c-df05-44a6-ba00-eb64156e1c76.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/bb6b5057-b7a4-4870-b4de-de192729c085.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/300ef081-0ccc-4cf9-8eab-ec5117e7ec2c.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/ca8b5770-3919-48e5-b14b-66a4d0714d30.jpg",
   },
   {
-    src: "https://img-cf.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/39c28de9-2a7f-43bc-9e41-648befae3c95",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/2806b7dc-8812-4cb1-8b19-51da8aec8630.jpg",
   },
   {
-    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/026ebc78-835d-4bed-ad49-9a55b2ce0b36.jpg",
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/c352412a-e328-4e46-9286-4bc8c46d1860.jpg",
   },
 ];
 

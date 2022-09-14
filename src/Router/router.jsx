@@ -3,7 +3,6 @@ import Main from "../pages/Main";
 import Join from "../pages/Join";
 import Login from "../pages/Login";
 import Cart from "../pages/Cart";
-import Admin from "../pages/Admin";
 import Detail from "../pages/Detail";
 import Newest from "../pages/Newest";
 
@@ -15,10 +14,10 @@ const Router = () => {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Join />} />
-          <Route path="/detail/:productId" element={<Detail />} />
+          <Route path="/detail/:product_id" element={<Detail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/newest" element={<Newest />} />
-          <Route path="/admin" element={<Admin />} />
+     
         </Routes>
       </BrowserRouter>
     </>
