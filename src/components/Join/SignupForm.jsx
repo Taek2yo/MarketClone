@@ -47,14 +47,14 @@ function SignupForm() {
   const [isPwValid, setIsPwValid] = useState(false);
   const [isConfirmPwValid, setIsConfirmPwValid] = useState(false);
   const [isNickNameValid, setIsNickNameValid] = useState(false);
- 
+
 
   // 유효성 검증 문구를 보여주는 useState모음
   const [idRuleDesc, setIdRuleDesc] = useState("");
   const [pwRuleDesc, setPwRuleDesc] = useState("");
   const [ConfirmPwRuleDesc, setConfirmPwRuleDesc] = useState("");
   const [nickNameRuleDesc, setNickNameRuleDesc] = useState("");
- 
+
   // ID 유효성 검증 이벤트함수
   const usernameValidation = () => {
     if (usernameRegEx.test(username)) {

@@ -13,7 +13,7 @@ export const signupThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await instance.post("/user/signup", payload);
-      // console.log(response);
+      console.log(response);
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response); //통신 실패시 에러값 반환
@@ -31,6 +31,7 @@ export const idCheckThunk = createAsyncThunk(
         value: payload,
       });
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
+      //response.data확인
     } catch (iderror) {
       return thunkAPI.rejectWithValue(iderror.response.data); //통신 실패시 에러값 반환
     }
@@ -50,7 +51,7 @@ const signupSlice = createSlice({
   },
   extraReducers: {
     [signupThunk.fulfilled]: (state, action) => {
-      //action.payload = response.data
+      // action.payload = response.data
       alert("가입이 완료되었습니다.");
       state.isSignupSucceed = true;
     },
@@ -68,7 +69,7 @@ const signupSlice = createSlice({
     }
   },
 });
-
+//action 데이터로 받음 action 확인
 // reducer export
 export const { resetSignupState } = signupSlice.actions;
 
