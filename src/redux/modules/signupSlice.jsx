@@ -12,7 +12,7 @@ export const signupThunk = createAsyncThunk(
   "signupSlice/signupThunk",
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.post("/user/signup", payload);
+      const response = await instance.post("api/user/signup", payload);
       // console.log(response);
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
@@ -26,7 +26,7 @@ export const idCheckThunk = createAsyncThunk(
   "signupSlice/idCheckThunk",
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.post("/user/idCheck", {
+      const response = await instance.post("api/user/idCheck", {
         key: "username",
         value: payload,
       });

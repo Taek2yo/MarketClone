@@ -7,7 +7,7 @@ import {
   resetSignupState,
 } from "../../redux/modules/signupSlice";
 import { useNavigate } from "react-router-dom";
-import { useDaumPostcodePopup } from "react-daum-postcode";
+
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
 import {
@@ -26,11 +26,11 @@ function SignupForm() {
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
-    confirmPw: "",
+    passwordConfirm: "",
     nickName: "",
   });
 
-  const { username, password, confirmPw, nickName } = userInfo;
+  const { username, password, passwordConfirm, nickName } = userInfo;
   const handleInput = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
@@ -45,14 +45,14 @@ function SignupForm() {
   // 인풋에 들어온 내용이 valid한가?(참/거짓)
   const [isIdValid, setIsIdValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
-  const [isConfirmPwValid, setIsConfirmPwValid] = useState(false);
+  const [ispasswordConfirmValid, setIspasswordConfirmValid] = useState(false);
   const [isNickNameValid, setIsNickNameValid] = useState(false);
  
 
   // 유효성 검증 문구를 보여주는 useState모음
   const [idRuleDesc, setIdRuleDesc] = useState("");
   const [pwRuleDesc, setPwRuleDesc] = useState("");
-  const [ConfirmPwRuleDesc, setConfirmPwRuleDesc] = useState("");
+  const [passwordConfirmRuleDesc, setpasswordConfirmRuleDesc] = useState("");
   const [nickNameRuleDesc, setNickNameRuleDesc] = useState("");
  
   // ID 유효성 검증 이벤트함수
@@ -80,13 +80,13 @@ function SignupForm() {
   };
 
   // 패스워드 재확인 유효성 검증 이벤트함수
-  const confirmPwValidation = () => {
-    if (confirmPw === password) {
-      setIsConfirmPwValid(true);
-      setConfirmPwRuleDesc("");
+  const passwordConfirmValidation = () => {
+    if (passwordConfirm === password) {
+      setIspasswordConfirmValid(true);
+      setpasswordConfirmRuleDesc("");
     } else {
-      setIsConfirmPwValid(false);
-      setConfirmPwRuleDesc("동일한 비밀번호를 입력");
+      setIspasswordConfirmValid(false);
+      setpasswordConfirmRuleDesc("동일한 비밀번호를 입력");
     }
   };
 
@@ -125,7 +125,7 @@ function SignupForm() {
     setModal(!modal);
   };
 
-  // ! ----------- 카카오 우편번호 API ------------------------------
+/*   // ! ----------- 카카오 우편번호 API ------------------------------
   const scriptUrl =
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl);
@@ -152,15 +152,15 @@ function SignupForm() {
     open({ onComplete: handleComplete });
   };
   // console.log(userInfo);
-  // ! ------------------ 가입하기 버튼 --------------------------
+  // ! ------------------ 가입하기 버튼 -------------------------- */
   // 모든 항목을 만족했을 때만 submit!
   const SubmitData = (e) => {
     e.preventDefault();
     if (
-      userInfo.address.length > 0 &&
+      /* userInfo.address.length > 0 && */
       isIdValid &&
       isPwValid &&
-      isConfirmPwValid &&
+      ispasswordConfirmValid &&
       isNickNameValid === true
     ) {
       if (isIdUsable) {
@@ -253,16 +253,16 @@ function SignupForm() {
         <InputWrapper>
           <Input
             type="password"
-            name="confirmPw"
-            value={confirmPw.value}
+            name="passwordConfirm"
+            value={passwordConfirm.value}
             onChange={handleInput}
             placeholder="비밀번호를 한번 더 입력해주세요"
             autoComplete="off"
-            onKeyUp={confirmPwValidation}
+            onKeyUp={passwordConfirmValidation}
             maxLength="21"
           />
           <Validation>
-            <p>{ConfirmPwRuleDesc}</p>
+            <p>{passwordConfirmRuleDesc}</p>
           </Validation>
         </InputWrapper>
         <BtnWrapper />
@@ -293,7 +293,7 @@ function SignupForm() {
         <BtnWrapper />
       </StRow>
       
-      <StRow>
+      {/* <StRow>
         <LabelWrapper>
           <label>주소</label>
           <span>*</span>
@@ -318,7 +318,7 @@ function SignupForm() {
           </Validation>
         </InputWrapper>
         <BtnWrapper />
-      </StRow>
+      </StRow> */}
       <Line />
       <Agreement />
       <SubmitBtnWrapper>
