@@ -48,11 +48,11 @@ const Signup = (props) => {
 
   const saveWord = (e) => {
     e.preventDefault();
-    console.log(username.current.value);
+   /*  console.log(username.current.value);
     console.log(password.current.value);
     console.log(passwordConfirm.current.value);
     console.log(nickname.current.value);
-
+ */
     const new_word = {
       username: username.current.value,
       password: password.current.value,
@@ -95,7 +95,7 @@ const Signup = (props) => {
                 ref={username}
               />
               {/* 백에서 중복확인 없애셔서 우리도 이버튼 필요없음! */}
-              <CheckButton>중복확인</CheckButton>
+              {/* <CheckButton>중복확인</CheckButton> */}
             </InputTag>
           </InputWrap>
 
