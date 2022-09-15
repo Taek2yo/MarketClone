@@ -38,7 +38,7 @@ const settings = {
 };
 
 const Suggest = ({ children, list }) => {
-  console.log(list)
+  
   return (
     <SuggestWraper>
       <SuggestBox>
