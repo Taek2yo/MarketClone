@@ -1,169 +1,138 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginThunk } from "../../redux/modules/loginSlice";
-import useInput from "../../hooks/useInput";
+import { useState } from "react";
 import styled from "styled-components";
-import { Input } from "../../elements/Input";
-import { Btn } from "../../elements/Btn";
-import { KAKAO_AUTH_URL } from "../login/Oauth";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
-function LoginForm() {
-  const nav = useNavigate();
+const Login = ({ is_login, setIsLogin }) => {
+
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  const [userId, onIdHandler] = useInput("");
-  const [password, onPasswordHandler] = useInput("");
+  let [loginId, setLoginId] = useState("");
 
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  let sessionStorage = window.sessionStorage;
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (userId === "" || password === "") {
-      alert("아이디 혹은 비밀번호를 입력해주세요");
-      return;
+  const username = React.useRef(null);
+  const password = React.useRef(null);
+
+  const axiosLogin = async () => {
+    try {
+      const res = await axios.post("http://13.209.26.228:8080/api/user/login", {
+        username: username.current.value,
+        password: password.current.value,
+      })
+      // console.log(res.headers.authorization);
+      if (res.status === 200 && res.headers.authorization) {
+        sessionStorage.setItem("Authorization", res.headers.authorization);
+        sessionStorage.setItem("username", username.current.value); // header에 쓸 username 세션에 담기
+        window.alert("로그인 하셨습니다!");
+        navigate("/");
+      }
+    } catch (e) {
+      window.alert("로그인 정보를 다시 확인해주세요!")
     }
-    dispatch(loginThunk({ userId, password }));
-    if (isLoggedIn) {
-      nav("/");
-    }
+
   };
+  // sessionStorage.setItem("token", res.headers.authorization)
 
-  const loginCheck = localStorage.getItem("token");
-  // console.log(loginCheck);
-
-  // 로컬스토리지에 토큰이 있으면 메인페이지로 이동
-
-  useEffect(() => {
-    if (loginCheck) {
-      nav("/");
-    }
-  }, [loginCheck]);
 
   return (
-    <Container>
-      <Title>로그인</Title>
-      <Body>
-        <form>
-          <InputArea>
-            <InputWrapper>
-              <Input
-                height="54px"
-                fontSize="14px"
-                placeholder="아이디를 입력해주세요"
-                type="text"
-                name="userId"
-                value={userId}
-                onChange={onIdHandler}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Input
-                height="54px"
-                fontSize="14px"
-                placeholder="비밀번호를 입력해주세요"
-                type="password"
-                name="password"
-                value={password}
-                onChange={onPasswordHandler}
-              />
-            </InputWrapper>
-          </InputArea>
-          <FindUserInfoArea>
-            <p>아이디 찾기</p>
-            <span></span>
-            <p>비밀번호 찾기</p>
-          </FindUserInfoArea>
-          <BtnWrapper>
-            <Btn
-              type="submit"
-              width="100%"
-              height="54px"
-              border="0px none"
-              backgroundColor="#5f0080"
-              color="white"
-              fontSize="16px"
-              onClick={submitHandler}
-            >
-              로그인
-            </Btn>
-            <div style={{ height: "10px" }}></div>
-            <Btn
-              type="submit"
-              width="100%"
-              height="54px"
-              border="0px none"
-              backgroundColor="#fecc1a"
-              color="black"
-              fontSize="16px"
-              onClick={KAKAO_AUTH_URL}
-            >
-              카카오 로그인
-            </Btn>
-            <div style={{ height: "10px" }}></div>
-            <Btn
-              type="button"
-              width="100%"
-              height="54px"
-              fontSize="16px"
-              onClick={() => nav("/signup")}
-            >
-              회원가입
-            </Btn>
-          </BtnWrapper>
-        </form>
-      </Body>
-    </Container>
+    <div>
+      <LoginWrap>
+        <h3>로그인</h3>
+        <InputId
+          type="text"
+          placeholder="아이디를 입력해주세요"
+          ref={username}
+        // onChange={(e) => {
+        //   setLoginId(e.target.value);
+        // }}
+        />
+        <InputPw
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          ref={password}
+        />
+        <LoginButton
+          onClick={() => { axiosLogin(); }}
+        >
+          로그인
+        </LoginButton>
+
+        <SignupButton
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          회원가입
+        </SignupButton>
+      </LoginWrap>
+    </div>
   );
-}
+};
 
-export default LoginForm;
-
-const Container = styled.div`
-  min-width: 1050px;
-  margin-top: 90px;
-  margin-bottom: 60px;
-`;
-const Title = styled.div`
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 20px;
-  text-align: center;
-`;
-const Body = styled.div`
+const LoginWrap = styled.div`
   width: 340px;
-  margin: 0px auto;
-  letter-spacing: -0.6px;
-`;
-const InputArea = styled.div`
-  margin-top: 30px;
-`;
-const InputWrapper = styled.div`
-  margin-bottom: 12px;
-`;
-
-const FindUserInfoArea = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  font-size: 13px;
-  & p {
-    color: rgb(51, 51, 51);
-    font-size: 13px;
-    letter-spacing: -0.6px;
-  }
-
-  & span {
-    width: 1px;
-    height: 10px;
-    margin: 3px 6px 0px;
-    background-color: rgb(51, 51, 51);
+  margin: 0 auto;
+  padding-top: 90px;
+  padding-bottom: 120px;
+  /* background-color: aliceblue; */
+  h3 {
+    font-weight: 800;
+    font-size: 20px;
+    text-align: center;
   }
 `;
-const BtnWrapper = styled.div`
-  margin-top: 28px;
-  position: relative;
-  height: 48px;
+
+const InputId = styled.input`
+  width: 100%;
+  height: 54px;
+  padding: 0 19px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin: 25px 0 10px;
 `;
 
-//
+const InputPw = styled.input`
+  width: 100%;
+  height: 54px;
+  padding: 0 19px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+`;
+
+const LoginButton = styled.button`
+  width: 100%;
+  height: 54px;
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin: 20px 0 10px;
+  border: 1px solid #5f0081;
+  background-color: #5f0080;
+  color: white;
+`;
+
+const SignupButton = styled.button`
+  width: 100%;
+  height: 54px;
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #5f0081;
+  background-color: white;
+  color: #5f0080;
+`;
+
+export default Login;

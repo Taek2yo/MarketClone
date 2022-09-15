@@ -1,5 +1,6 @@
 import { instance } from "./instance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = [];
 
@@ -7,7 +8,8 @@ export const getCartAysnc = createAsyncThunk(
   "get/CartList",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.get("/cart");
+      const res = await axios.get("http://13.209.26.228:8080/api/cart");
+      console.log(res)
       return res.data;
     } catch (error) {
       console.error(error);
@@ -43,7 +45,7 @@ export const addCartAysnc = createAsyncThunk(
   "add/CartList",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.post(`/cart/${data.productId}`, {
+      const res = await axios.post(`http://13.209.26.228:8080/api/cart/${data.product.id}`, {
         quantity: data.quantity,
       });
       return res.data;
