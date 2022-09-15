@@ -105,7 +105,7 @@ const Signup = (props) => {
             </Label>
             <InputTag>
               <Input
-                type="text"
+                type="password"
                 placeholder="비밀번호를 입력해주세요"
                 ref={password}
               />
@@ -118,7 +118,7 @@ const Signup = (props) => {
             </Label>
             <InputTag>
               <Input
-                type="text"
+                type="password"
                 placeholder="비밀번호를 한번 더 입력해주세요"
                 ref={passwordConfirm}
               />
