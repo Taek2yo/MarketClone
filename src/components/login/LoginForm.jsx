@@ -6,6 +6,7 @@ import useInput from "../../hooks/useInput";
 import styled from "styled-components";
 import { Input } from "../../elements/Input";
 import { Btn } from "../../elements/Btn";
+import { KAKAO_AUTH_URL } from "../login/Oauth";
 
 function LoginForm() {
   const nav = useNavigate();
@@ -85,6 +86,19 @@ function LoginForm() {
               onClick={submitHandler}
             >
               로그인
+            </Btn>
+            <div style={{ height: "10px" }}></div>
+            <Btn
+              type="submit"
+              width="100%"
+              height="54px"
+              border="0px none"
+              backgroundColor="#fecc1a"
+              color="black"
+              fontSize="16px"
+              onClick={KAKAO_AUTH_URL}
+            >
+              카카오 로그인
             </Btn>
             <div style={{ height: "10px" }}></div>
             <Btn
