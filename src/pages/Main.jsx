@@ -8,9 +8,9 @@ import LineBanner from "../components/LineBanner/LineBanner";
 import SpeacilDeals from "../components/SpecialDeals/SpecialDeals";
 import Catergories from "../components/Categories/Categories";
 
-import { __getProducts } from "../redux/modules/productSlice";
+import { __getProducts } from "../redux/modules/productSlice";/* 
 import { getCategoryAsync } from "../redux/modules/categorySlice";
-
+ */
 const Main = () => {
   const [category, setCategory] = useState("추석선물세트");
 
@@ -31,7 +31,7 @@ const Main = () => {
   }, [dispatch]);
 
   const list = useSelector((state) => state.product?.data);
-  console.log(list)
+  
   return (
     <>
       <Header />
