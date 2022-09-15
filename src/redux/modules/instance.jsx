@@ -6,7 +6,7 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
- /*  const Authorization  = localStorage.getItem("Authorization");
+/*  const Authorization  = localStorage.getItem("Authorization");
   const refreshtoken = localStorage.getItem("refreshtoken");
   config.headers.Authorization = Authorization ;
   config.headers.refreshtoken = refreshtoken; */
