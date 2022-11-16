@@ -145,4 +145,3 @@ Cors에 대한 요청을 지난주차와 동일하게 진행하였으나 에러�
 3. 장바구니에 있는 금액들 자동계산 , 주문
 
 
-<h3 align="center"><b>📂 Project Directory Structure 📁</b></h3>
